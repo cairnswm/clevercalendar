@@ -1,4 +1,4 @@
-(function($) {
+;(function($) {
   $.extend($.fn, {
     CleverCalendar: function(options) {
       var defaults = {
@@ -228,4 +228,4 @@
       };
     }
   });
-})(Zepto);
+})(window.Zepto || window.jQuery);
