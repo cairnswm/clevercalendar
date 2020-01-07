@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="clevercalendar.css" />
+  </head>
+  <body>
+    <center>
+      <h1>Clever Calendar</h1>
+      <div id="cal"></div>
+    </center>
+    <script src="zepto.js"></script>
+    <script src="clevercalendar.js"></script>
+
+    <script language="javascript" type="text/javascript">
+      Zepto(function($) {
+        $("#cal").CleverCalendar({
+          startDate: new Date().setHours(0, 0, 0, 0),
+          onGetEvents: function(onDate) {
+            ret = undefined;
+            theDay = new Date("2020-01-04");
+            if (
+              onDate.getFullYear() == theDay.getFullYear() &&
+              onDate.getMonth() == theDay.getMonth() &&
+              onDate.getDate() == theDay.getDate()
+            ) {
+              console.log("SAME");
+              ret = true;
+            }
+            return ret;
+          },
+          onSelectDay: function(newDate) {
+            alert(newDate);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
