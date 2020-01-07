@@ -1,5 +1,7 @@
 # Clever Calendar
 
+Simple calendar component for Zepto. Should work on jQuery with minimal changes.
+
 ## Configurations
 startDate: Date to start the calendar on
 
