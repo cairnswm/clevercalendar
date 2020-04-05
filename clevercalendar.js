@@ -16,6 +16,10 @@
         onGetEvents: function(onDate) {
           return undefined;
         },
+        onPrintNextMonth: function(onDate) { return "->"; },        
+        onPrintPriorMonth: function(onDate) { return "<-"; },
+        onPrintNextYear: function(onDate) { return "->>"; },        
+        onPrintPriorYear: function(onDate) { return "<<-"; },
         dayNames: new Array("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"),
         monthNames: new Array(
           "January",
@@ -86,7 +90,7 @@
         cal +=
           "<table class='" +
           CleverCalendar.settings.classes.calendar +
-          "'>" +
+          "'>" + 
           TR_start;
         cal +=
           '<td colspan="' +
@@ -95,9 +99,11 @@
           CleverCalendar.settings.classes.title +
           '"><b>';
         cal +=
-          "<span class='left priorMonth'>&lt;</span><span class='left priorYear' style='padding-left:10px'>&lt;&lt;</span>";
+          "<span class='left priorMonth'>" + CleverCalendar.settings.onPrintPriorMonth(Calendar) +"</span>";
+        cal += "<span class='left priorYear' style='padding-left:10px'>" + CleverCalendar.settings.onPrintPriorYear(Calendar) +"</span>";
         cal +=
-          "<span class='right nextMonth'>&gt;</span><span class='right nextYear' style='padding-right:10px'>&gt;&gt;</span>";
+          "<span class='right nextMonth'>" + CleverCalendar.settings.onPrintNextMonth(Calendar) +"</span>";
+        cal += "<span class='right nextYear' style='padding-right:10px'>" + CleverCalendar.settings.onPrintNextYear(Calendar) +"</span>";
         cal +=
           CleverCalendar.settings.monthNames[month] +
           " " +
