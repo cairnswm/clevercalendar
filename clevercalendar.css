@@ -23,14 +23,13 @@
     /* color: white;
      background-color: blueviolet; */
      color: magenta;
+    font-weight: bold;
   }
   .today:before {
     font: 1.2em arial;
-    content:"[ ";
   }
   .today:after {
     font: 1.2em arial;
-    content:" ]";
   }
   .events {
     background-color: yellow;

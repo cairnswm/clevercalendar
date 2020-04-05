@@ -60,10 +60,10 @@
         var year = Calendar.getFullYear(); // Returns year
         var month = Calendar.getMonth(); // Returns month (0-11)
         var today = Calendar.getDate(); // Returns day (1-31)
-        var weekday = Calendar.getDay(); // Returns day (1-31)
+        var weekday = Calendar.getDay(); // Returns day ow week (sunday = 0)
 
         var DAYS_OF_WEEK = 7; // "constant" for number of days in a week
-        var DAYS_OF_MONTH = 31; // "constant" for number of days in a month
+        var DAYS_OF_MONTH = new Date(year, month+1, 0).getDate(); // "constant" for number of days in a month
         var cal; // Used for printing
 
         Calendar.setDate(1); // Start the calendar day at '1'
@@ -107,31 +107,18 @@
           TR_end;
         cal += TR_start;
 
-        //   DO NOT EDIT BELOW THIS POINT  //
-
         // LOOPS FOR EACH DAY OF WEEK
         for (index = 0; index < DAYS_OF_WEEK; index++) {
-          // BOLD TODAY'S DAY OF WEEK
-          if (weekday == index) {
-            cal +=
-              TD_start +
-              "<b>" +
-              CleverCalendar.settings.dayNames[index] +
-              "</b>" +
-              TD_end;
-          }
-          // PRINTS DAY
-          else {
             cal += TD_start + CleverCalendar.settings.dayNames[index] + TD_end;
-          }
         }
 
         cal += TD_end + TR_end;
         cal += TR_start;
 
         // FILL IN BLANK GAPS UNTIL TODAY'S DAY
-        for (index = 0; index < Calendar.getDay(); index++)
+        for (index = 0; index < Calendar.getDay(); index++) {
           cal += TD_start + "  " + TD_end;
+        }
 
         // LOOPS FOR EACH DAY IN CALENDAR
         for (index = 0; index < DAYS_OF_MONTH; index++) {
@@ -144,18 +131,12 @@
               cal += TR_start;
             }
 
-            if (week_day != DAYS_OF_WEEK) {
-              // SET VARIABLE INSIDE LOOP FOR INCREMENTING PURPOSES
-              var day = Calendar.getDate();
-
-              // HIGHLIGHT TODAY'S DATE
+            if (week_day != DAYS_OF_WEEK) {              // HIGHLIGHT TODAY'S DATE
               dispDate = new Date(year, month, index + 1).setHours(0, 0, 0, 0);
               events = CleverCalendar.settings.onGetEvents(new Date(dispDate));
               m = month+1;
               if (m  < 10) { m = "0" + m; }
               daySelect = year+"-"+m+"-"+(index + 1);
-              
-
 
               clss = CleverCalendar.settings.classes.cell;
               if (dispDate == todayDate) {
@@ -164,7 +145,7 @@
               if (events != undefined) {
                 clss += " " + CleverCalendar.settings.classes.events;
               }
-              cal += "<td data-day='"+daySelect+"' class='" + clss + "'>" + day;
+              cal += "<td data-day='"+daySelect+"' class='" + clss + "'>" + Calendar.getDate();
               cal += TD_end;
             }
 
@@ -176,7 +157,16 @@
           Calendar.setDate(Calendar.getDate() + 1);
         } // end for loop
 
-        cal += "</TD></TR></TABLE>";
+        Calendar.setDate(Calendar.getDate() - 1);
+        var dow = Calendar.getDay();
+        var daysLeft = (6-dow);
+        for (index = 0; index < daysLeft; index++) {
+          cal += TD_start + "  " + TD_end; 
+        }
+
+        cal += "</TD></TR>";
+        cal += "<tr><td colspan='7' class='title'><span class='gtToday'>Today</span></td></tr>";
+        cal += "</TABLE>";
 
         el.html(cal);
         $(".priorMonth").on("click", function() {
@@ -191,6 +181,9 @@
         $(".nextYear").on("click", function() {
           nextYear();
         });
+        $(".gtToday").on("click", function() {
+          gotoToday();
+        });
         $(".cell").on("click", function(event) {
           target = event.target;
           day = $(target).data("day");
@@ -202,7 +195,7 @@
       function addMonths(date, months) {
         var inDate = new Date(date);
         var d = inDate.getDate();
-        inDate.setMonth(inDate.getMonth() + +months);
+        inDate.setMonth(inDate.getMonth() +months);
         if (inDate.getDate() != d) {
           inDate.setDate(0);
         }
@@ -224,6 +217,10 @@
       };
       nextYear = function() {
         CleverCalendar.DisplayDate = addMonths(CleverCalendar.DisplayDate, 12);
+        cal = ShowCalendar(CleverCalendar.DisplayDate);
+      };
+      gotoToday = function() {
+        CleverCalendar.DisplayDate = todayDate;
         cal = ShowCalendar(CleverCalendar.DisplayDate);
       };
     }
