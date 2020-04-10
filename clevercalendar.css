@@ -5,15 +5,15 @@
     border-spacing: 0;
     border-collapse: collapse;
   }
-  .calendar .left { float:left; }
-  .calendar .right { float:right; }
+  .calendar .calleft { float:left; }
+  .calendar .calright { float:right; }
   .calendar table,
   .calendar th,
   .calendar td {
     border: 1px solid mediumslateblue;
   }
-  .title {
-    background-color:lightgray;
+  .caltitle {
+    background-color:lightgrey;
   }
   .cell {
     min-width: 2.2em;
@@ -22,7 +22,7 @@
   .today {
     /* color: white;
      background-color: blueviolet; */
-     color: magenta;
+    color: magenta;
     font-weight: bold;
   }
   .today:before {
